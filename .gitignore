@@ -1,0 +1,15 @@
+.bash_helpers.sh
+arm-none-eabi.cmake
+bin
+build_*
+CMakeFiles
+CMakeCache.txt
+cmake_install.cmake
+compile_commands.json
+config.cmake
+Makefile
+share
+sourceme
+tools
+
+stm32f4_demo*
