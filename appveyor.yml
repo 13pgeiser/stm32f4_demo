@@ -1,0 +1,13 @@
+configuration: Release
+image: Visual Studio 2017
+platform: x64
+version: "{build}"
+
+build:
+  verbosity: normal
+
+build_script:
+  - set PATH=C:\Program Files\Git\bin
+  - bash ./configure.sh
+  - bash -c "source sourceme && make -j"
+
