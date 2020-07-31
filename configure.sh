@@ -19,4 +19,4 @@ _install_subversion
 _write_sourceme
 
 # Done! Now call cmake
-_call_cmake .. -DCMAKE_TOOLCHAIN_FILE=arm-none-eabi.cmake
+_call_cmake -DCMAKE_TOOLCHAIN_FILE=arm-none-eabi.cmake
