@@ -14,6 +14,12 @@ https://www.st.com/en/evaluation-tools/32f429idiscovery.html
 Windows
 *******
 
+|appveyor-badge|
+
+.. |appveyor-badge| image:: https://ci.appveyor.com/api/projects/status/h920fdua2oyidnce/branch/master?svg=true
+              :target: https://ci.appveyor.com/project/13pgeiser/stm32f4-demo/branch/master
+
+
 Install:
  * `ST-LINK utility <https://www.st.com/en/development-tools/stsw-link004.html>`__
  * `Git for windows <https://git-scm.com/download/win>`__
@@ -23,6 +29,11 @@ Once installed:
 
 Linux
 *****
+
+|travis-badge|
+
+.. |travis-badge| image:: https://api.travis-ci.org/13pgeiser/stm32f4_demo.svg?branch=master
+              :target: https://travis-ci.org/github/13pgeiser/stm32f4_demo
 
 Install st-flash and git
  * On debian: *sudo apt-get install stlink-tools git*
