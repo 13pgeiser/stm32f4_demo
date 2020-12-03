@@ -15,9 +15,7 @@ docker_setup() { #helpmsg: Setup variables for docker: image, volume, ...
 	if [ "$(getent group docker)" ]; then
 		DOCKER_FLAGS="--group-add $(getent group docker | cut -d: -f3) -v /var/run/docker.sock:/var/run/docker.sock"
 	fi
-	USER_IDS="$(id -u):$(id -g)"
-	export USER_IDS
-	DOCKER_RUN_BASE="docker run --rm  $DOCKER_FLAGS -u $USER_IDS -v $VOLUME_NAME:/home/$USER -v $(pwd):/mnt --name ${IMAGE_NAME}_container"
+	DOCKER_RUN_BASE="docker run --rm  $DOCKER_FLAGS -u $(id -u):$(id -g) -v $VOLUME_NAME:/home/$USER -v $(pwd):/mnt --name ${IMAGE_NAME}_container"
 	DOCKER_RUN_I="$DOCKER_RUN_BASE -i $IMAGE_NAME"
 	export DOCKER_RUN_I
 	DOCKER_RUN_IT="$DOCKER_RUN_BASE -it $IMAGE_NAME"
@@ -40,6 +38,8 @@ ARG UID=1000
 ARG GID=1000
 RUN groupadd -g $GID -o $USER
 RUN useradd -m -u $UID -g $GID -o -s /bin/bash $USER
+RUN mkdir -p /work
+RUN chown -R ${USER}.${USER} /work
 EOF
 }
 
@@ -79,6 +79,47 @@ RUN 	apt-get update && \
 EOF
 }
 
+dockerfile_appimage() {
+	cat >>$DOCKERFILE <<'EOF'
+# Install base deps
+RUN set -ex \
+    && apt-get update \
+    && apt-get dist-upgrade -y \
+    && apt-get install -y --no-install-recommends \
+	git \
+	ca-certificates \
+	build-essential \
+	cmake \
+	autoconf \
+	automake \
+	libtool \
+	pkg-config \
+	wget \
+	xxd \
+	desktop-file-utils \
+	libglib2.0-dev \
+	libcairo2-dev \
+	fuse \
+	libfuse-dev \
+	zsync \
+	yasm \
+	strace \
+	adwaita-icon-theme \
+    && apt-get clean \
+    && rm -rf /var/cache/apt/archives/* /var/lib/apt/lists/*
+EOF
+	if [ -f AppRun ]; then
+		cat >>$DOCKERFILE <<'EOF'
+COPY AppRun /work/AppDir/AppRun
+RUN set -ex \
+    && chmod a+x /work/AppDir/AppRun \
+    && wget https://github.com/AppImage/AppImageKit/releases/download/12/appimagetool-x86_64.AppImage -P /work \
+    && chmod +x /work/appimagetool-x86_64.AppImage
+RUN chown -R ${USER}.${USER} /work
+EOF
+	fi
+}
+
 dockerfile_switch_to_user() { #helpmsg: switch to the user in the dockerfile and set workdir
 	cat >>$DOCKERFILE <<'EOF'
 USER $USER
@@ -89,7 +130,7 @@ EOF
 
 run_shfmt_and_shellcheck() { #helpmsg: Execute shfmt and shellcheck
 	for helper in *.sh; do
-		docker run --rm -u "$USER_IDS" -v "$PWD":/mnt mvdan/shfmt -w /mnt/"$helper"
+		docker run --rm -u "$(id -u):$(id -g)" -v "$PWD":/mnt mvdan/shfmt -w /mnt/"$helper"
 		docker run --rm -e SHELLCHECK_OPTS="" -v "$PWD":/mnt koalaman/shellcheck:stable -x "$helper"
 	done
 }
