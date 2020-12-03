@@ -1,6 +1,7 @@
 #!/bin/bash
 set -ex
 source bash-helpers/helpers.sh
+run_shfmt_and_shellcheck
 # Get submodules
 git submodule update --init
 # Install required tools
