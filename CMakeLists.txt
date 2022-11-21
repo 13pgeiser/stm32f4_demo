@@ -78,7 +78,8 @@ if (${CMAKE_SYSTEM_PROCESSOR} STREQUAL "arm")
       COMMAND ${CMAKE_OBJCOPY}
       ARGS -O binary ${PROJECT_NAME} ${PROJECT_NAME}.bin)
     add_custom_target(run
-      COMMAND st-flash write ${PROJECT_NAME}.bin 0x8000000)
+      COMMAND st-flash write ${PROJECT_NAME}.bin 0x8000000
+      COMMAND st-flash reset)
   endif()
 else()
   if (${CMAKE_SYSTEM_NAME} STREQUAL "Linux")
