@@ -107,9 +107,9 @@ ExternalProject_Add(
   CONFIGURE_COMMAND   pwd
   BUILD_COMMAND       make -C build/gcc
   INSTALL_COMMAND     make -C build/gcc install prefix="${CMAKE_BINARY_DIR}" INSTALL=install
-  PREFIX              ${CMAKE_BINARY_DIR}/tools/astyle/prefix
-  SOURCE_DIR          ${CMAKE_BINARY_DIR}/tools/astyle
-  BINARY_DIR          ${CMAKE_BINARY_DIR}/tools/astyle
+  PREFIX              ${CMAKE_BINARY_DIR}/_tools/astyle/prefix
+  SOURCE_DIR          ${CMAKE_BINARY_DIR}/_tools/astyle
+  BINARY_DIR          ${CMAKE_BINARY_DIR}/_tools/astyle
   EXCLUDE_FROM_ALL    1
   )
 
@@ -139,12 +139,12 @@ ExternalProject_Add(
   GIT_TAG             1.89
   GIT_SHALLOW         1
   CMAKE_ARGS          ${CPPCHECK_CMAKE_ARGS}
-  PREFIX              ${CMAKE_BINARY_DIR}/tools/cppcheck/prefix
-  TMP_DIR             ${CMAKE_BINARY_DIR}/tools/cppcheck/tmp
-  STAMP_DIR           ${CMAKE_BINARY_DIR}/tools/cppcheck/stamp
-  DOWNLOAD_DIR        ${CMAKE_BINARY_DIR}/tools/cppcheck/download
-  SOURCE_DIR          ${CMAKE_BINARY_DIR}/tools/cppcheck/src
-  BINARY_DIR          ${CMAKE_BINARY_DIR}/tools/cppcheck/build
+  PREFIX              ${CMAKE_BINARY_DIR}/_tools/cppcheck/prefix
+  TMP_DIR             ${CMAKE_BINARY_DIR}/_tools/cppcheck/tmp
+  STAMP_DIR           ${CMAKE_BINARY_DIR}/_tools/cppcheck/stamp
+  DOWNLOAD_DIR        ${CMAKE_BINARY_DIR}/_tools/cppcheck/download
+  SOURCE_DIR          ${CMAKE_BINARY_DIR}/_tools/cppcheck/src
+  BINARY_DIR          ${CMAKE_BINARY_DIR}/_tools/cppcheck/build
   EXCLUDE_FROM_ALL    1
   )
 
@@ -171,6 +171,6 @@ add_dependencies(check astyle cppcheck)
 
 add_custom_target(
   mrproper
-  COMMAND rm -rf bin/ CMakeFiles/ share/ tools/
+  COMMAND rm -rf bin/ CMakeFiles/ share/ _tools/
   COMMAND rm -f arm-none-eabi.cmake _bash_helpers.sh CMakeCache.txt cmake_install.cmake compile_commands.json config.cmake Makefile sourceme ${PROJECT_NAME}*
   )

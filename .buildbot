@@ -1,0 +1,6 @@
+bash git submodule update --init --recursive
+bash ./configure.sh
+bash make check -j$(nproc)
+bash source sourceme && make -j$(nproc)
+bash make mrproper
+

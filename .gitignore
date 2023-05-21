@@ -10,6 +10,5 @@ config.cmake
 Makefile
 share
 sourceme
-tools
-
+_tools
 stm32f4_demo*

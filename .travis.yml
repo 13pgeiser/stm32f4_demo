@@ -1,7 +1,0 @@
-dist: bionic
-language: cpp
-script:
-  - bash ./configure.sh
-  - source sourceme
-  - make -j
-
