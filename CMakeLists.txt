@@ -136,7 +136,7 @@ list(APPEND CPPCHECK_CMAKE_ARGS
 ExternalProject_Add(
   cppcheck
   GIT_REPOSITORY      https://github.com/danmar/cppcheck.git
-  GIT_TAG             1.89
+  GIT_TAG             2.13.0
   GIT_SHALLOW         1
   CMAKE_ARGS          ${CPPCHECK_CMAKE_ARGS}
   PREFIX              ${CMAKE_BINARY_DIR}/_tools/cppcheck/prefix

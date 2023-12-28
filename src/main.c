@@ -80,7 +80,7 @@ int main(void) {
   BSP_LCD_SetBackColor(LCD_COLOR_BLACK);
   BSP_LCD_SetFont(&Font12);
   BSP_LCD_Clear(LCD_COLOR_WHITE);
-  BSP_LCD_DisplayStringAt(0, 16, (uint8_t*)"Ready", CENTER_MODE);
+  BSP_LCD_DisplayStringAt(0, 16, (uint8_t*)"Ready", CENTER_MODE);  // cppcheck-suppress cstyleCast
 
   for (;;) {}
 }
